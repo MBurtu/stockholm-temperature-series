@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+<title>Westerlies.eu - Stockholm 1756-2017</title>
+<meta name="description" content="Meteorological observations made at Stockholm old observatory 1756-2017">
+
+<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+
+<link rel="stylesheet" href="css/stockholm.css" type="text/css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js" integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-csv/1.0.11/jquery.csv.js" integrity="sha512-eDkr7sqAJqr3s63mdge3uTyuKVpEbzw3eji7CbGYr8VeM+NtqNajwuAiU31S0buRspDF1mZ8qTSeEZ4v/8b3Gw==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.7.0/d3.js"></script>
+ 
+</head>
+
+<body>
+<div id="loading">
+	<div class="w100 h95">
+		<div id="text">
+			<p><span class="size6 black">Stockholm old observatory</span><br>
+			<span class="size8 blue">1756 - <span id="load_years" class="red">1756</span></span>
+			<div id="progress_container">
+				<div id="progress">0%</div>
+			</div>
+		</div>
+	</div>
+	<div id="footer-start">
+		<span class="blue">Background: <a href="https://stockholmskallan.stockholm.se/post/5178" target="blank" class="black">Johan Sevenbom (1784), view from Blekholmen towards Gamla Brogatan and the neighborhood surrounding the old Observatory.</a></span>
+	</div>
+</div>
+
+<div id="start_bg">
+	<div id="slider_container">
+		<div class="w10">
+			Year
+		</div>
+		<div class="w90">
+			<input type="range" min="1756" max="2017" value="1756" class="slider" id="year">
+		</div>
+		<div class="w10">
+			Month		
+		</div>
+		<div class="w90">
+			<input type="range" min="1" max="12" value="1" class="slider" id="month">
+		</div>
+		<div class="w10">
+			Day
+		</div>
+		<div class="w90">
+			<input type="range" min="1" max="31" value="1" class="slider" id="day">
+		</div>
+	</div>
+
+	<div id="result">
+		<div id="date" class="black">
+			<div class="w100">
+				<span id="input_day">1</span> <span id="input_month">January</span>
+			</div>
+			<div class="w100">
+				<span id="input_year">1756</span>
+				<div id="climate-info">
+					<span class="year-anomaly">1756</span> was <span class="anomaly">1.0</span>&deg;C <span class="cold-warm"><span class="dark-blue">colder</span></span> than the average for 1756-2017 (6.3&deg;C).
+				</div>
+			</div>
+		</div>
+		<div id="output">
+			<table class="output">
+				<thead>
+					<tr class="blue"><th></th><th>temperature</th><th>cloudiness</th></tr>
+				</thead>
+				<tbody>
+					<tr><td class="blue">morning</td><td class="red"><span id="temp_morning">-8.0</span>&deg;C</td><td class="red"><div class="cloudiness" id="cld_morning"><span class="yellow"><i class="fas fa-sun"></i></span></div></td></tr>
+					<tr><td class="blue">noon</td><td class="red"><span id="temp_noon">-9.0</span>&deg;C</td><td class="red"><div class="cloudiness" id="cld_noon"><span class="yellow"><i class="fas fa-sun"></i></span></div></td></tr>
+					<tr><td class="blue">evening</td><td class="red"><span id="temp_evening">----</span>&deg;C</td><td class="red"><div class="cloudiness" id="cld_evening">----</div></td></tr>
+				</tbody>
+			</table>
+			<div class="curved-border size3 align-center">
+				<span class="blue">min <span id="temp_min" class="red">----</span><span class="red">&deg;C</span> |</span> <span class="blue">max</span> <span id="temp_max" class="red">----</span><span class="red">&deg;C</span> 
+			</div>
+		</div>
+	</div>
+
+	<div id="climate">
+	</div>
+
+	<div class="attachment_container" id="attachment1">
+		<div class="type" onclick="showAttachment(this)"><i class="fas fa-info-circle"></i></i></div>
+		<div class="text_container">
+			<div class="text">
+				<p style="text-align:left;">Throughout the years <span class="red">cloudiness</span> have been described using many different scales, e. g. clear/scattered/overcast 1756-1784, tenths 1873-1960 and in hundreds by the current automatic station. In this visualization cloudiness have been approximated to eights as seen below.</p>
+				<table class="legend">
+					<tr>
+						<td>
+							0/8
+						</td>
+						<td>
+							1-2/8
+						</td>
+						<td>
+							3-4/8
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<div class="cloudiness"><span class="sun" style="font-size:1em;top:-0.5em;"><i class="fas fa-sun"></i></span></div>
+						</td>
+						<td>
+							<div class="cloudiness"><span class="sun" style="font-size:1em;top:-0.5em;"><i class="fas fa-sun"></i></span><span class="cloud" style="font-size:0.4em;left:1em;top:-0.65em;"><i class="fas fa-cloud"></i></span></div>
+						</td>
+						<td>
+							<div class="cloudiness"><span class="sun" style="font-size:1em;top:-0.5em;"><i class="fas fa-sun"></i></span><span class="cloud" style="font-size:0.6em;left:0.6em;top:-0.6em;"><i class="fas fa-cloud"></i></span></div>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							5-7/8
+						</td>
+						<td>
+							8/8
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<div class="cloudiness"><span class="sun" style="font-size:1em;top:-0.5em;"><i class="fas fa-sun"></i></span><span class="cloud" style="font-size:0.8em;left:0.2em;top:-0.6em;"><i class="fas fa-cloud"></i></span></div>
+						</td>
+						<td>
+							<div class="cloudiness"><span class="cloud" style="font-size:1em;top:-0.5em;"><i class="fas fa-cloud"></i></span></div>
+						</td>
+					</tr>
+				</table>
+				<p><span class="red">Note:</span> Precipitation is not included.</p>
+				<hr>
+				<p style="text-align:left;">
+					1756-01-01 <i class="fas fa-arrow-right red"></i> 1760-12-31 <span class="red">|</span> Two observations per day (morning &amp; noon).<br>
+					1761-01-01 <i class="fas fa-arrow-right red"></i> 2017-12-31 <span class="red">|</span> Three observations per day (morning, noon &amp; evening).<br>
+					1763-02-25 <i class="fas fa-arrow-right red"></i> 1763-02-28 <span class="red">|</span> No observations were made.<br>
+					1859-01-01 <i class="fas fa-arrow-right red"></i> 2017-12-31 <span class="red">|</span> Max and min temperature.<br>
+					1756-01-01 <i class="fas fa-arrow-right red"></i> 2012-12-31 <span class="red">|</span> Manual.<br>
+					2013-01-01 <i class="fas fa-arrow-right red"></i> 2017-12-31 <span class="red">|</span> Automatic.<br>
+				</p>
+			</div>
+			<div class="hide" onclick="hideAttachment(this)"><i class="far fa-times-circle"></i></div>
+		</div>
+	</div>
+	
+	<footer>
+		<span class="text">
+			<span class="blue">data: <a href="https://bolin.su.se/data/stockholm/" target="blank">Bolin Centre for Climate Research</a> | contact: <span class="red">mattias.burtu[at]gmail.com</span> | background: <a href="https://sv.wikipedia.org/wiki/Fil:Stockholm_panorama_1868_Stadsmuseum.jpg" target="blank">Stockholm panorama. Lithography by Carl Johan Billmark 1868.</a> <i class="fab fa-creative-commons-pd"></i></span>
+		</span>
+	</footer>
+</div>
+
+<script src="js/stockholm.js"></script>
+
+</body>
+
+</html>
