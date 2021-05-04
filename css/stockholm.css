@@ -441,6 +441,7 @@ table.legend tr:nth-child(odd) td {
 	background-image: url(../img/blekholmen1784.jpg);
 	background-size: cover;
 	background-attachment: fixed;
+	background-color: rgba(215, 202, 170, 1);
 }
 
 #text {
