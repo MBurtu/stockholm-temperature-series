@@ -177,7 +177,7 @@ function loadClimate() {
 			.attr("text-anchor", "middle")
 			.attr("x", width/2)
 			.attr("y", margin.top) 
-			.text("annual average anomaly & 10 year running average anomaly relative to 1756-2017 [°C]");
+			.html("annual average & 10 year running average relative to 1756-2017 [&deg;C]");
 		
 	});
 
