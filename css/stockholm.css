@@ -1,3 +1,34 @@
+/*
+//      stockholm.css
+//-
+
+//      Table of Contents
+//      1. Body      
+//      2. Layout
+//          2.1 Floats
+//          2.2 Loader
+//          2.3 Footer
+//      3. Weather observations
+//          3.1 Sliders
+//          3.2 Containers
+//          3.3 Sun & Clouds
+//      4. Bar chart
+//      5. Attachments
+//          5.1 Containers
+//          5.2 Table
+//      6. Typography
+//      7. Media queries
+
+//-
+//-
+*/
+
+/**********************************
+*
+*     1. Body
+*
+***********************************/
+
 @import url(http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,300italic,700);
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,400italic,700);
 @import url(http://fonts.googleapis.com/css?family=Sorts+Mill+Goudy:400,400italic,700);
@@ -69,11 +100,14 @@ body {
   box-sizing: border-box;
 }	
 
-/* /////////////////////////
-/
-/      Grid
-/
-//////////////////////////*/
+/**********************************
+*
+*     2. Layout
+*
+***********************************/
+
+/**********************************
+*     2.1 Floats */
 
 .w100 {
 	float: left;
@@ -120,6 +154,118 @@ body {
 	float: right;
 }
 
+/**********************************
+*     2.2 Loader */
+
+#loading {
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 4;
+	width: 100%;
+	height: 100%;
+	background-image: url(../img/blekholmen1784.jpg);
+	background-size: cover;
+	background-attachment: fixed;
+	background-color: rgba(215, 202, 170, 1);
+}
+
+#text {
+	margin-top: 20vh;
+}
+
+#progress_container {
+  width: 100%; 
+  background-color: rgba(51,73,95,0.2);
+}
+
+#progress {
+  width: 0%;
+  height: 1.5em;
+  background-color: rgba(153,51,51,0.8);
+  text-align: center; 
+  line-height: 1.5em; 
+  color: rgba(255,255,255,0.8);
+}
+
+/**********************************
+*     2.3 Footer */
+
+footer {
+	float: left;
+	display: flex;
+	justify-content: flex-end;
+	width: 100%;
+	height: 5vh;
+	font-size: 0.8em;
+	background: rgba(215, 202, 170, 0.7);
+}
+footer .text {
+	align-self: flex-end;
+	text-align: center;
+}
+
+#footer-start {
+	float: left;
+	width: 100%;
+	height: 5vh;
+	border-top: 3px dashed rgba(0,0,0,0.6);
+	background: rgba(255,255,255,0.5);
+}
+
+#start_bg {
+	display: block;
+}
+
+/**********************************
+*
+*     3. Weather observations
+*
+***********************************/
+
+/**********************************
+*     3.1 Sliders */
+
+#slider_container {
+	float: left;
+	width: 100%;
+	height: 20vh;
+	padding: 10px;
+}
+
+.slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 15px;
+  border-radius: 5px;   
+  background: rgba(211, 211, 211, 0.6);
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%; 
+  background: #993333;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #993333;
+  cursor: pointer;
+}
+
+/**********************************
+*     3.2 Containers */
+
 #result {
 	float: left;
 	width: 100%;
@@ -152,6 +298,18 @@ body {
 	line-height: 100%;
 }
 
+.curved-border {
+	display: inline-block;
+	border-top: 5px solid rgba(51,73,95,0.8);
+	height: 100px;
+	border-radius: 50px;
+	margin-top: 30px;
+	padding: 0px 50px 0px 50px
+}
+
+/**********************************
+*     3.3 Sun & Clouds */
+
 .cloudiness {
 	position: relative;
 	height: 100%;
@@ -171,20 +329,17 @@ body {
 	text-shadow: 3px 3px 0px rgba(51,51,51,0.5);
 }
 
-.curved-border {
-	display: inline-block;
-	border-top: 5px solid rgba(51,73,95,0.8);
-	height: 100px;
-	border-radius: 50px;
-	margin-top: 30px;
-	padding: 0px 50px 0px 50px
-}
-
 .shadow {
 	-webkit-box-shadow: 0px 0px 7px rgba(50, 50, 50, 0.3);
 	-moz-box-shadow:    0px 0px 7px rgba(50, 50, 50, 0.3);
 	box-shadow:         0px 0px 7px rgba(50, 50, 50, 0.3);
 }
+
+/**********************************
+*
+*     4. Bar chart
+*
+***********************************/
 
 #climate {
 	float: left; 
@@ -249,38 +404,14 @@ path.domain {
 	stroke: none;
 }
 
-footer {
-	float: left;
-	display: flex;
-	justify-content: flex-end;
-	width: 100%;
-	height: 5vh;
-	font-size: 0.8em;
-	background: rgba(215, 202, 170, 0.7);
-}
-footer .text {
-	align-self: flex-end;
-	text-align: center;
-}
+/**********************************
+*
+*     5. Attachments
+*
+***********************************/
 
-#footer-start {
-	float: left;
-	width: 100%;
-	height: 5vh;
-	border-top: 3px dashed rgba(0,0,0,0.6);
-	background: rgba(255,255,255,0.5);
-}
-
-#start_bg {
-	display: block;
-}
-
-
-/* /////////////////////////
-/
-/      Attachments
-/
-//////////////////////////*/
+/**********************************
+*     5.1 Containers */
 
 .attachment_container {
 	width: 50%;
@@ -337,11 +468,8 @@ footer .text {
 #attachment1 { top: 20%; }
 #attachment2 { top: 30%; }
 
-/* /////////////////////////
-/
-/      Table
-/
-//////////////////////////*/
+/**********************************
+*     5.2 Table */
 
 table.output {
 	text-align: left;
@@ -382,97 +510,12 @@ table.legend tr:nth-child(odd) td {
 	padding-left: 2em;
 	color: rgba(153,51,51,0.8);
 }
-/* /////////////////////////
-/
-/      Sliders
-/
-//////////////////////////*/
 
-#slider_container {
-	float: left;
-	width: 100%;
-	height: 20vh;
-	padding: 10px;
-}
-
-.slider {
-  -webkit-appearance: none;
-  width: 100%;
-  height: 15px;
-  border-radius: 5px;   
-  background: rgba(211, 211, 211, 0.6);
-  outline: none;
-  opacity: 0.7;
-  -webkit-transition: .2s;
-  transition: opacity .2s;
-}
-
-.slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 25px;
-  height: 25px;
-  border-radius: 50%; 
-  background: #993333;
-  cursor: pointer;
-}
-
-.slider::-moz-range-thumb {
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
-  background: #993333;
-  cursor: pointer;
-}
-
-/* /////////////////////////
-/
-/      Loader
-/
-//////////////////////////*/
-
-#loading {
-	position: fixed;
-	top: 0;
-	left: 0;
-	z-index: 4;
-	width: 100%;
-	height: 100%;
-	background-image: url(../img/blekholmen1784.jpg);
-	background-size: cover;
-	background-attachment: fixed;
-	background-color: rgba(215, 202, 170, 1);
-}
-
-#text {
-	margin-top: 20vh;
-}
-
-/* /////////////////////////
-/
-/      Progress bar
-/
-//////////////////////////*/
-
-#progress_container {
-  width: 100%; 
-  background-color: rgba(51,73,95,0.2);
-}
-
-#progress {
-  width: 0%;
-  height: 1.5em;
-  background-color: rgba(153,51,51,0.8);
-  text-align: center; 
-  line-height: 1.5em; 
-  color: rgba(255,255,255,0.8);
-}
-
-/* /////////////////////////
-/
-/      Text
-/
-//////////////////////////*/
+/**********************************
+*
+*     6. Typography
+*
+***********************************/
 
 .size3 { font-size: 3em; line-height: 100%; }
 .size4 { font-size: 4em; line-height: 100%; }
@@ -492,7 +535,6 @@ table.legend tr:nth-child(odd) td {
 .yellow { color: rgba(239, 251, 9, 0.64); }
 .cloud-white { color: rgba(215, 215, 215, 0.9); }
 
-
 a {
 	color: rgba(153,51,51,0.8);
 	text-decoration: none;
@@ -502,12 +544,11 @@ hr {
 	border-top: 5px dashed #993333;
 }
 
-/* /////////////////////////
-/
-/      Media Queries
-/
-//////////////////////////*/
-
+/**********************************
+*
+*     7. Media queries
+*
+***********************************/
 
 @media screen and (max-width: 1500px) {
 
