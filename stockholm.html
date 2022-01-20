@@ -40,7 +40,7 @@
 			Year
 		</div>
 		<div class="w90">
-			<input type="range" min="1756" max="2017" value="1756" class="slider" id="year">
+			<input type="range" min="1756" max="2018" value="1756" class="slider" id="year">
 		</div>
 		<div class="w10">
 			Month		
@@ -64,23 +64,78 @@
 			<div class="w100">
 				<span id="input_year">1756</span>
 				<div id="climate-info">
-					<span class="year-anomaly">1756</span> was <span class="anomaly">1.0</span>&deg;C <span class="cold-warm"><span class="dark-blue">colder</span></span> than the average for 1756-2017 (6.3&deg;C).
+					<span class="year-anomaly">1756</span> was <span class="anomaly">1.0</span>&deg;C <span class="cold-warm"><span class="dark-blue">colder</span></span> than the average for 1756-2018 (6.3&deg;C).
 				</div>
 			</div>
 		</div>
 		<div id="output">
-			<table class="output">
-				<thead>
-					<tr class="blue"><th></th><th>temperature</th><th>cloudiness</th></tr>
-				</thead>
-				<tbody>
-					<tr><td class="blue">morning</td><td class="red"><span id="temp_morning">-8.0</span>&deg;C</td><td class="red"><div class="cloudiness" id="cld_morning"><span class="yellow"><i class="fas fa-sun"></i></span></div></td></tr>
-					<tr><td class="blue">noon</td><td class="red"><span id="temp_noon">-9.0</span>&deg;C</td><td class="red"><div class="cloudiness" id="cld_noon"><span class="yellow"><i class="fas fa-sun"></i></span></div></td></tr>
-					<tr><td class="blue">evening</td><td class="red"><span id="temp_evening">----</span>&deg;C</td><td class="red"><div class="cloudiness" id="cld_evening">----</div></td></tr>
-				</tbody>
-			</table>
-			<div class="curved-border size3 align-center">
-				<span class="blue">min <span id="temp_min" class="red">----</span><span class="red">&deg;C</span> |</span> <span class="blue">max</span> <span id="temp_max" class="red">----</span><span class="red">&deg;C</span> 
+			<div class="cld_tmp">
+				<table class="output">
+					<thead>
+						<tr class="blue"><th></th><th>temperature</th><th>cloudiness</th></tr>
+					</thead>
+					<tbody>
+						<tr><td class="blue">morning</td><td class="red"><span id="temp_morning">-8.0&deg;C</span></td><td class="red"><div class="cloudiness" id="cld_morning"><span class="yellow"><i class="fas fa-sun"></i></span></div></td></tr>
+						<tr><td class="blue">noon</td><td class="red"><span id="temp_noon">-9.0&deg;C</span></td><td class="red"><div class="cloudiness" id="cld_noon"><span class="yellow"><i class="fas fa-sun"></i></span></div></td></tr>
+						<tr><td class="blue">evening</td><td class="red"><span id="temp_evening"></span></td><td class="red"><div class="cloudiness" id="cld_evening"></div></td></tr>
+					</tbody>
+				</table>
+				<div class="curved-border size3 align-center">
+					<span class="blue">min <span id="temp_min" class="red"></span><span class="red"></span> |</span> <span class="blue">max</span> <span id="temp_max" class="red"></span><span class="red"></span> 
+				</div>
+			</div>
+			<div class="snow">
+				<div class="snow-header">
+					snow depth
+				</div>
+				<div class="measurement">
+					<div class="ruler">
+						<div class="ten_cm">
+							<div class="block beige-block"></div>
+							<div class="block black-block"></div>
+						</div>
+						<div class="ten_cm">
+							<div class="block black-block"></div>
+							<div class="block beige-block"></div>
+						</div>
+						<div class="ten_cm">
+							<div class="block beige-block"></div>
+							<div class="block black-block"></div>
+						</div>
+						<div class="ten_cm">
+							<div class="block black-block"></div>
+							<div class="block beige-block"></div>
+						</div>
+						<div class="ten_cm">
+							<div class="block beige-block"></div>
+							<div class="block black-block"></div>
+						</div>
+						<div class="ten_cm">
+							<div class="block black-block"></div>
+							<div class="block beige-block"></div>
+						</div>
+						<div class="ten_cm">
+							<div class="block beige-block"></div>
+							<div class="block black-block"></div>
+						</div>
+						<div class="ten_cm">
+							<div class="block black-block"></div>
+							<div class="block beige-block"></div>
+						</div>
+						<div class="ten_cm">
+							<div class="block beige-block"></div>
+							<div class="block black-block"></div>
+						</div>
+						<div class="ten_cm">
+							<div class="block black-block"></div>
+							<div class="block beige-block"></div>
+						</div>
+					</div>
+					<div class="snow_depth">
+						<div class="depth_cm"></div>
+						<div class="depth_block"></div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
