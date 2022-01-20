@@ -9,8 +9,8 @@
 //      3. Visualize data
 //          3.1 Corrections
 //          3.2 Symbol size
-//          3.2 Daily observations
-//          3.2 Bar chart
+//          3.3 Daily observations
+//          3.4 Bar chart
 //      4. Attachments
 
 //-
@@ -32,13 +32,15 @@ $(document).ready(function() {
 		console.error(error);
 	});
 	async function loadData() {
-		const response = await fetch("data/stockholm_cloud_temperature.csv");
+		// Data
+		const response = await fetch("data/data.csv");
 		const csv = await response.text();
+		// Parse
 		parseData(csv);
 	}
 
 	var years = [];
-	for (var i = 1756; i <= 2017; i++) {
+	for (var i = 1756; i <= 2018; i++) {
 	   years.push(i);
 	}
 	var numberOfYears = years.length;
@@ -80,12 +82,12 @@ $(document).ready(function() {
 //
 /////////////////////////////////
 
-function parseData(data) {
-	var raw = $.csv.toObjects(data); 
-
+function parseData(csv) {
+	var dataObj = $.csv.toObjects(csv); 
+	
 	$("#year").on("click mousemove touchend touchmove", function() {
 
-		showData(raw, $("#year").val(), $("#month").val(), $("#day").val());
+		showData(dataObj, $("#year").val(), $("#month").val(), $("#day").val());
 
 		// Change active bar in bar chart
 		$(".bar").removeClass("active-bar");
@@ -109,13 +111,13 @@ function parseData(data) {
 
 	$("#month").on("click mousemove touchend touchmove", function() {
 		
-		showData(raw, $("#year").val(), $("#month").val(), $("#day").val());
+		showData(dataObj, $("#year").val(), $("#month").val(), $("#day").val());
 		
 	});
 
 	$("#day").on("click mousemove touchend touchmove", function() {
 		
-		showData(raw, $("#year").val(), $("#month").val(), $("#day").val());
+		showData(dataObj, $("#year").val(), $("#month").val(), $("#day").val());
 		
 	});	
 	
@@ -141,7 +143,7 @@ function dayOfMonth (year,month,day) {
 	return day;
 } 
 
-//Changes temperature, if nescessary, to correct format (ie one decimal and '----' if missing) 
+//Changes temperature, if nescessary, to correct format (ie one decimal and '' if missing) 
 function corrTemp(temperature) {
 	
 	temperature = temperature.trim(); // removes whitespace from string
@@ -149,7 +151,7 @@ function corrTemp(temperature) {
 	
 	if (temperature == 'NaN') {
 		
-		temp = '----';
+		temp = '';
 		
 	} else if (temperature.substring(temperature.length - 2) == '00') {
 		
@@ -265,16 +267,16 @@ function cloudSize(cloudiness,year,month,day) {
 ////////////////////////////////////
 //      3.3 Daily observations
 
-function showData (raw, year, month, day) {
+function showData (dataObj, year, month, day) {
 	
 	var dayCor = dayOfMonth(year,month,day);
 	
-	var chosenDate = raw.filter(function (el) {
+	var chosenDate = dataObj.filter(function (el) {
 		return el.year == year &&
 		el.month == month &&
 		el.day == dayCor;
 	});
-	
+
 	var months = ['January', 'Febuary', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'Oktober', 'November', 'December'];
 	
 	$("#input_year").text(year);
@@ -286,22 +288,25 @@ function showData (raw, year, month, day) {
 	var noon_temp = corrTemp(chosenDate[0].noon_temp);
 	var evening_temp = corrTemp(chosenDate[0].evening_temp);
 	
-	$("#temp_morning").text(morning_temp);
-	$("#temp_noon").text(noon_temp);
-	$("#temp_evening").text(evening_temp);
-	
-	if (chosenDate[0].tmax !== undefined) {	
-		$("#temp_max").text(corrTemp(chosenDate[0].tmax));
+	$("#temp_morning").html(morning_temp + '&deg;C');
+	$("#temp_noon").html(noon_temp + '&deg;C');
+	if (chosenDate[0].evening_temp !== 'NaN') {
+		$("#temp_evening").html(evening_temp + '&deg;C');
 	} else {
-		$("#temp_max").text('----');
+		$("#temp_evening").html('');
 	}
 	
-	if (chosenDate[0].tmin !== undefined) {	
-		$("#temp_min").text(corrTemp(chosenDate[0].tmin));
+	if (chosenDate[0].tmax !== 'NaN') {	
+		$("#temp_max").html(corrTemp(chosenDate[0].tmax) + '&deg;C');
 	} else {
-		$("#temp_min").text('----');
+		$("#temp_max").html('');
 	}
 	
+	if (chosenDate[0].tmin !== 'NaN') {	
+		$("#temp_min").html(corrTemp(chosenDate[0].tmin) + '&deg;C');
+	} else {
+		$("#temp_min").html('');
+	}
 	
 	// Cloudiness
 	var morning_cld = cloudSize(chosenDate[0].morning_cld,year,month,dayCor);
@@ -309,20 +314,45 @@ function showData (raw, year, month, day) {
 	var evening_cld = cloudSize(chosenDate[0].evening_cld,year,month,dayCor);
 	
 	if (morning_cld.length == 0) {
-		$("#cld_morning").html('<span class="red">----</span>');
+		$("#cld_morning").html('<span class="red"></span>');
 	} else {
 		$("#cld_morning").html('<span class="sun" style="font-size:'+morning_cld[3]+';top:'+morning_cld[4]+';"><i class="fas fa-sun"></i></span><span class="cloud" style="font-size:'+morning_cld[0]+';left:'+morning_cld[1]+';top:'+morning_cld[2]+';"><i class="fas fa-cloud"></i></span>');
 	}
 	if (noon_cld.length == 0) {
-		$("#cld_noon").html('<span class="red">----</span>');
+		$("#cld_noon").html('<span class="red"></span>');
 	} else {
 		$("#cld_noon").html('<span class="sun" style="font-size:'+noon_cld[3]+';top:'+noon_cld[4]+';"><i class="fas fa-sun"></i></span><span class="cloud" style="font-size:'+noon_cld[0]+';left:'+noon_cld[1]+';top:'+noon_cld[2]+';"><i class="fas fa-cloud"></i></span>');
 	}
 	if (evening_cld.length == 0) {
-		$("#cld_evening").html('<span class="red">----</span>');
+		$("#cld_evening").html('<span class="red"></span>');
 	} else {
 		$("#cld_evening").html('<span class="sun" style="font-size:'+evening_cld[3]+';top:'+evening_cld[4]+';"><i class="fas fa-sun"></i></span><span class="cloud" style="font-size:'+evening_cld[0]+';left:'+evening_cld[1]+';top:'+evening_cld[2]+';"><i class="fas fa-cloud"></i></span>');
 	}
+
+	// Snow depth
+	var snowDepth = chosenDate[0].snow_depth;
+	if (snowDepth == 'NaN') { 
+		snowDepth = 0;
+		$('.snow').css('display', 'none');
+	} else {
+		$('.snow').css('display', 'flex');
+	}
+	var rulerHeight = $('.ruler').height();
+	var snowDepth_cm = Math.round(snowDepth * 100 * 10) / 10; // m -> cm
+
+	$('.depth_block').empty();
+	$('.depth_block').css('height', snowDepth*rulerHeight + 'px');
+	var snowFlake = '<div class="snow_flake cloud-white"><i class="far fa-snowflake"></i></div>';
+	var snowFlakes = '';
+	var nrOfFlakes = Math.round(2*10*snowDepth);
+	for (var i=0; i<nrOfFlakes; i++) {
+		snowFlakes += snowFlake;
+	}
+	$('.depth_block').html(snowFlakes);
+
+	$('.depth_cm').html(snowDepth_cm + ' cm');
+
+	
 	
 } 
 
@@ -458,7 +488,7 @@ function loadClimate() {
 			.attr("text-anchor", "middle")
 			.attr("x", width/2)
 			.attr("y", margin.top) 
-			.html("annual average & 10 year running average relative to 1756-2017 [&deg;C]");
+			.html("annual average & 10 year running average relative to 1756-2018 [&deg;C]");
 		
 	});
 
