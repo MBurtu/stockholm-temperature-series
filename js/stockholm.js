@@ -97,14 +97,14 @@ function parseData(csv) {
 		currentBar.addClass("active-bar");
 		
 		var anomaly = currentBar.attr("data-anomaly");
-		var anomaly_abs = Math.abs(currentBar.attr("data-anomaly"));
+		var anomaly_abs = dot2comma(Math.abs(currentBar.attr("data-anomaly")));
 		
 		$(".year-anomaly").html(year);
 		$(".anomaly").html(anomaly_abs);
 		if (anomaly >= 0) {
-			$(".cold-warm").html("<span class='dark-red'>warmer</span>");
+			$(".cold-warm").html("<span class='dark-red'>varmare</span>");
 		} else if (anomaly < 0) {
-			$(".cold-warm").html("<span class='dark-blue'>colder</span>");
+			$(".cold-warm").html("<span class='dark-blue'>kallare</span>");
 		}
 		
 	});
@@ -155,20 +155,33 @@ function corrTemp(temperature) {
 		
 	} else if (temperature.substring(temperature.length - 2) == '00') {
 		
-		temp = (temperature.substring(0, temperature.length - 1));
+		temp = dot2comma(temperature.substring(0, temperature.length - 1));
 		
 	} else if (temperature.substring(temperature.length - 2) == '.0') {
 	
-		temp = temperature;
+		temp = dot2comma(temperature);
 		
 	} else {	
 	
-		temp = Math.round(temperature * 10) / 10;
+		temp = dot2comma(Math.round(temperature * 10) / 10);
 		
 	}
 
 	return temp;
 		
+}
+
+function dot2comma(dot) {
+	
+	var dotStr = dot.toString();
+	
+	if (dotStr.includes('.')) {
+		var comma = dotStr.replace('.', ',');
+	} else {
+		var comma = dotStr;
+	}
+
+	return comma;
 }
 
 ////////////////////////////////////
@@ -277,8 +290,12 @@ function showData (dataObj, year, month, day) {
 		el.day == dayCor;
 	});
 
-	var months = ['January', 'Febuary', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'Oktober', 'November', 'December'];
-	
+	var todayDate = new Date(year, month - 1, day);
+	var tomorrowDate = new Date(todayDate.getTime() + (24 * 60 * 60 * 1000));
+
+	const months = ['januari', 'februari', 'mars', 'april', 'maj', 'juni', 'juli', 'augusti', 'september', 'oktober', 'november', 'december'];
+ 	const monthsNr = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
+
 	$("#input_year").text(year);
 	$("#input_month").text(months[month-1]);
 	$("#input_day").text(dayCor);
@@ -332,27 +349,26 @@ function showData (dataObj, year, month, day) {
 	// Snow depth
 	var snowDepth = chosenDate[0].snow_depth;
 	if (snowDepth == 'NaN') { 
-		snowDepth = 0;
-		$('.snow').css('display', 'none');
+		$('.depth_cm').html('');
+		$('.depth_time').html('');
 	} else {
-		$('.snow').css('display', 'flex');
+		var snowDepth_cm = Math.round(snowDepth * 100 * 10) / 10; // m -> cm
+		$('.depth_cm').html(snowDepth_cm + ' <span class="unit">cm</span>');
+		let today = dayCor + '/' + monthsNr[month-1];
+		$('.depth_time').html(today + ' 06Z<br><br>');
 	}
-	var rulerHeight = $('.ruler').height();
-	var snowDepth_cm = Math.round(snowDepth * 100 * 10) / 10; // m -> cm
-
-	$('.depth_block').empty();
-	$('.depth_block').css('height', snowDepth*rulerHeight + 'px');
-	var snowFlake = '<div class="snow_flake cloud-white"><i class="far fa-snowflake"></i></div>';
-	var snowFlakes = '';
-	var nrOfFlakes = Math.round(2*10*snowDepth);
-	for (var i=0; i<nrOfFlakes; i++) {
-		snowFlakes += snowFlake;
-	}
-	$('.depth_block').html(snowFlakes);
-
-	$('.depth_cm').html(snowDepth_cm + ' cm');
-
 	
+	// 24hr precipitation
+	var precip24 = chosenDate[0].precip24;
+	if (precip24 == 'NaN') { 
+		$('.precip24').html('');
+		$('.precip_time').html('');
+	} else {
+		$('.precip24').html(dot2comma(precip24) + ' <span class="unit">mm</span>');
+		let today = dayCor + '/' + monthsNr[month-1];
+		let tomorrow = tomorrowDate.getDate() + '/' + monthsNr[tomorrowDate.getMonth()]; 
+		$('.precip_time').html(today + ' 06Z &#10145;' + tomorrow + ' 06Z<br>');
+	}	
 	
 } 
 
@@ -467,11 +483,11 @@ function loadClimate() {
 		var runningMean = d3.line()
 		   .curve(d3.curveNatural)
 		   .x(function(d) { return x(d.year); })
-		   .y(function(d) { return y(d.running_anomaly); });
+		   .y(function(d) { return y(d.running_anomaly_10); });
 
 		var runningData = [];
 		for (var i = 0; i < data.length; i++) {
-			if (data[i].running_anomaly != null) {
+			if (data[i].running_anomaly_10 != null) {
 				runningData.push(data[i]);
 			}
 		}
@@ -488,7 +504,7 @@ function loadClimate() {
 			.attr("text-anchor", "middle")
 			.attr("x", width/2)
 			.attr("y", margin.top) 
-			.html("annual average & 10 year running average relative to 1756-2018 [&deg;C]");
+			.html("&aring;rsmedelv&auml;rde & 10 &aring;rs glidande medelv&auml;rde relativt 1756-2018 [&deg;C]");
 		
 	});
 
@@ -499,6 +515,25 @@ function loadClimate() {
 //      4. Attachments
 //
 //////////////////////////////////////
+
+function showExtra(extra) {
+
+	var dataID = $(extra).attr('data-id');
+	
+	$('#wrapper').hide();
+	$('#' + dataID).css('display', 'flex');
+
+	$('.extra_btn').hide();
+
+}
+
+function closeExtra() {
+
+	$('.extra').hide();
+	$('#wrapper').show();
+	$('.extra_btn').show();
+
+}
 
 function showAttachment(attachment){
 	
