@@ -4,13 +4,14 @@
 
 <head>
 <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
-<title>Westerlies.eu - Stockholm 1756-2017</title>
-<meta name="description" content="Meteorological observations made at Stockholm old observatory 1756-2017">
+<title>Westerlies.eu - Stockholm 1756-2018</title>
+<meta name="description" content="Meteorologiska observationer gjorda vid gamla observatoriet i Stockholm 1756-2018">
 
 <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
 
 <link rel="stylesheet" href="css/stockholm.css" type="text/css">
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+
+<script src="https://kit.fontawesome.com/ca3331cbdb.js" crossorigin="anonymous"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js" integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g==" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-csv/1.0.11/jquery.csv.js" integrity="sha512-eDkr7sqAJqr3s63mdge3uTyuKVpEbzw3eji7CbGYr8VeM+NtqNajwuAiU31S0buRspDF1mZ8qTSeEZ4v/8b3Gw==" crossorigin="anonymous"></script>
@@ -22,7 +23,7 @@
 <div id="loading">
 	<div class="w100 h95">
 		<div id="text">
-			<p><span class="size6 black">Stockholm old observatory</span><br>
+			<p><span class="size6 black">Stockholms gamla observatorium</span><br>
 			<span class="size8 blue">1756 - <span id="load_years" class="red">1756</span></span>
 			<div id="progress_container">
 				<div id="progress">0%</div>
@@ -35,179 +36,336 @@
 </div>
 
 <div id="start_bg">
-	<div id="slider_container">
-		<div class="w10">
-			Year
+	<div id="wrapper">
+		<div id="slider_container">
+			<div class="w10">
+				&Aring;r
+			</div>
+			<div class="w90">
+				<input type="range" min="1756" max="2018" value="1756" class="slider" id="year">
+			</div>
+			<div class="w10">
+				M&aring;nad		
+			</div>
+			<div class="w90">
+				<input type="range" min="1" max="12" value="1" class="slider" id="month">
+			</div>
+			<div class="w10">
+				Dag
+			</div>
+			<div class="w90">
+				<input type="range" min="1" max="31" value="1" class="slider" id="day">
+			</div>
 		</div>
-		<div class="w90">
-			<input type="range" min="1756" max="2018" value="1756" class="slider" id="year">
-		</div>
-		<div class="w10">
-			Month		
-		</div>
-		<div class="w90">
-			<input type="range" min="1" max="12" value="1" class="slider" id="month">
-		</div>
-		<div class="w10">
-			Day
-		</div>
-		<div class="w90">
-			<input type="range" min="1" max="31" value="1" class="slider" id="day">
-		</div>
-	</div>
 
-	<div id="result">
-		<div id="date" class="black">
-			<div class="w100">
-				<span id="input_day">1</span> <span id="input_month">January</span>
-			</div>
-			<div class="w100">
-				<span id="input_year">1756</span>
-				<div id="climate-info">
-					<span class="year-anomaly">1756</span> was <span class="anomaly">1.0</span>&deg;C <span class="cold-warm"><span class="dark-blue">colder</span></span> than the average for 1756-2018 (6.3&deg;C).
+		<div id="result">
+			<div id="date" class="black">
+				<div class="w100">
+					<span id="input_day">1</span> <span id="input_month">januari</span>
 				</div>
-			</div>
-		</div>
-		<div id="output">
-			<div class="cld_tmp">
-				<table class="output">
-					<thead>
-						<tr class="blue"><th></th><th>temperature</th><th>cloudiness</th></tr>
-					</thead>
-					<tbody>
-						<tr><td class="blue">morning</td><td class="red"><span id="temp_morning">-8.0&deg;C</span></td><td class="red"><div class="cloudiness" id="cld_morning"><span class="yellow"><i class="fas fa-sun"></i></span></div></td></tr>
-						<tr><td class="blue">noon</td><td class="red"><span id="temp_noon">-9.0&deg;C</span></td><td class="red"><div class="cloudiness" id="cld_noon"><span class="yellow"><i class="fas fa-sun"></i></span></div></td></tr>
-						<tr><td class="blue">evening</td><td class="red"><span id="temp_evening"></span></td><td class="red"><div class="cloudiness" id="cld_evening"></div></td></tr>
-					</tbody>
-				</table>
-				<div class="curved-border size3 align-center">
-					<span class="blue">min <span id="temp_min" class="red"></span><span class="red"></span> |</span> <span class="blue">max</span> <span id="temp_max" class="red"></span><span class="red"></span> 
-				</div>
-			</div>
-			<div class="snow">
-				<div class="snow-header">
-					snow depth
-				</div>
-				<div class="measurement">
-					<div class="ruler">
-						<div class="ten_cm">
-							<div class="block beige-block"></div>
-							<div class="block black-block"></div>
-						</div>
-						<div class="ten_cm">
-							<div class="block black-block"></div>
-							<div class="block beige-block"></div>
-						</div>
-						<div class="ten_cm">
-							<div class="block beige-block"></div>
-							<div class="block black-block"></div>
-						</div>
-						<div class="ten_cm">
-							<div class="block black-block"></div>
-							<div class="block beige-block"></div>
-						</div>
-						<div class="ten_cm">
-							<div class="block beige-block"></div>
-							<div class="block black-block"></div>
-						</div>
-						<div class="ten_cm">
-							<div class="block black-block"></div>
-							<div class="block beige-block"></div>
-						</div>
-						<div class="ten_cm">
-							<div class="block beige-block"></div>
-							<div class="block black-block"></div>
-						</div>
-						<div class="ten_cm">
-							<div class="block black-block"></div>
-							<div class="block beige-block"></div>
-						</div>
-						<div class="ten_cm">
-							<div class="block beige-block"></div>
-							<div class="block black-block"></div>
-						</div>
-						<div class="ten_cm">
-							<div class="block black-block"></div>
-							<div class="block beige-block"></div>
-						</div>
-					</div>
-					<div class="snow_depth">
-						<div class="depth_cm"></div>
-						<div class="depth_block"></div>
+				<div class="w100">
+					<span id="input_year">1756</span>
+					<div id="climate-info">
+						<span class="year-anomaly">1756</span> var <span class="anomaly">1,0</span>&deg;C <span class="cold-warm"><span class="dark-blue">kallare</span></span> &auml;n medelv&auml;rdet f&ouml;r 1756-2018 (6,3&deg;C).
 					</div>
 				</div>
 			</div>
+			<div id="output">
+				<div class="cld_tmp">
+					<table class="output">
+						<thead>
+							<tr class="blue"><th></th><th>temperatur</th><th>molnighet</th></tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td class="blue">morgon</td><td class="red"><span id="temp_morning">-8,0&deg;C</span></td>
+								<td class="red"><div class="cloudiness" id="cld_morning"><span class="yellow"><i class="fas fa-sun"></i></span></div></td>
+								<td class="precip" rowspan=2>dygnsnederb&ouml;rd<br><span class="time_stamp precip_time"></span><br><span class="precip24"></span></td>
+							</tr>
+							<tr>
+								<td class="blue">middag</td><td class="red"><span id="temp_noon">-9,0&deg;C</span></td>
+								<td class="red"><div class="cloudiness" id="cld_noon"><span class="yellow"><i class="fas fa-sun"></i></span></div></td>
+							</tr>
+							<tr>
+								<td class="blue">kv&auml;ll</td><td class="red"><span id="temp_evening"></span></td>
+								<td class="red"><div class="cloudiness" id="cld_evening"></div></td>
+								<td class="precip" rowspan=2>sn&ouml;djup<br><span class="time_stamp depth_time"><br></span><span class="depth_cm"></span></td>
+							</tr>
+							<tr>
+								<td colspan=3 class="border-top"><span class="blue">min <span id="temp_min" class="red"></span><span class="red"></span> |</span> <span class="blue">max</span> <span id="temp_max" class="red"></span><span class="red"></span></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+
+		<div id="climate">
+		</div>
+		
+	</div>
+
+	<div class="extra_btn" onclick="showExtra(this)" id="attachment1" data-id="maxmin">
+		REKORD
+	</div>
+
+	<div class="extra_btn" onclick="showExtra(this)" id="attachment2" data-id="data">
+		DATA
+	</div>
+	
+	<div class="extra" id="maxmin">
+		<div class="maxmin_header">
+			TOPP <span class="dark-red">5</span>
+		</div>
+		<div class="close" onclick="closeExtra();">
+			<i class="fas fa-times"></i> STÄNG
+		</div>
+		<div class="flex-item">
+			<div class="flex-item-2 align-center">
+				<h2 class="dark-red">Temperatur <i class="fas fa-temperature-high"></i></h2>
+				(1756-2018)
+				<table class="maxmin_table">
+					<tr>
+						<td>1.</td><td class="dark-red">36,0&deg;C</td><td>7 juli 1811</td>
+					</tr>
+					<tr>
+						<td>2.</td><td class="dark-red">35,5&deg;C</td><td>21 juli 1811</td>
+					</tr>
+					<tr>
+						<td>3.</td><td class="dark-red">35,4&deg;C</td><td>6 augusti 1975</td>
+					</tr>
+					<tr>
+						<td>4.</td><td class="dark-red">35,0&deg;C</td><td>7 augusti 1975</td>
+					</tr>
+					<tr>
+						<td>5.</td><td class="dark-red">34,6&deg;C</td><td>9 juli 1933</td>
+					</tr>
+				</table>
+			</div>
+			<div class="flex-item-2">
+				<span class="dark-red">L&auml;ngsta v&auml;rmeb&ouml;lja: 29 dagar</span><br>
+				<span class="size0-9">Fr&aring;n 8 juli 2018 till 5 augusti 2018 understeg maxtemperaturen aldrig 25,0&deg;C.</span>
+			</div>
+			<div class="flex-item-2">
+				<span class="dark-red">Varmast &aring;r: 2014 &amp; 2018</span><br>
+				<span class="size0-9">&Aring;rsmedeltemperaturen 2014 &amp; 2018 var 8,7&deg;C, 2,4&deg;C varmare &auml;n medelv&auml;rdet f&ouml;r hela m&auml;tserien.</span>
+			</div>
+		</div>
+		<div class="flex-item">
+			<div class="flex-item-2 align-center">
+				<h2 class="dark-blue">Temperatur <i class="fas fa-temperature-low"></i></h2>
+				(1756-2018)
+				<table class="maxmin_table">
+					<tr>
+						<td>1.</td><td class="dark-blue">-32,0&deg;C</td><td>20 januari 1814</td>
+					</tr>
+					<tr>
+						<td>2.</td><td class="dark-blue">-30,0&deg;C</td><td>24 januari 1875</td>
+					</tr>
+					<tr>
+						<td>3.</td><td class="dark-blue">-28,2&deg;C</td><td>25 januari 1942</td>
+					</tr>
+					<tr>
+						<td>4.</td><td class="dark-blue">-27,0&deg;C</td><td>27 februari 1785</td>
+					</tr>
+					<tr>
+						<td>5.</td><td class="dark-blue">-25,0&deg;C</td><td>22 februari 1844</td>
+					</tr>
+				</table>
+			</div>
+			<div class="flex-item-2">
+				<span class="dark-blue">L&auml;ngsta period med minusgrader: 55 dagar</span>*<br>
+				<span class="size0-9">Fr&aring;n 5 januari 1942 till 28 februari 1942 var det ih&aring;llande minusgrader.</span><br>
+				<span class="size0-8">*Vintern 1766/67 uppm&auml;ttes 60 dagar med minusgrader, men utan max/min-termometer &auml;r det os&auml;kert om det var ih&aring;llande.</span>
+			</div>
+			<div class="flex-item-2">
+				<span class="dark-blue">Kallast &aring;r: 1867</span><br>
+				<span class="size0-9">&Aring;rsmedeltemperaturen 1867 var 3,5&deg;C, 2,8&deg;C kallare &auml;n medelv&auml;rdet f&ouml;r hela m&auml;tserien.</span>
+			</div>
+		</div>
+		<div class="flex-item">
+			<div class="flex-item-2 align-center">
+				<h2 class="dark-red">Dygnsnederb&ouml;rd</h2>
+				(1859-2018)
+				<table class="maxmin_table">
+					<tr>
+						<td>1.</td><td class="dark-red">77,8 mm</td><td>23 juli 1871</td>
+					</tr>
+					<tr>
+						<td>2.</td><td class="dark-red">68,3 mm</td><td>16 augusti 1903</td>
+					</tr>
+					<tr>
+						<td>3.</td><td class="dark-red">68,1 mm</td><td>7 juli 1925</td>
+					</tr>
+					<tr>
+						<td>4.</td><td class="dark-red">66,9 mm</td><td>14 augusti 1866</td>
+					</tr>
+					<tr>
+						<td>5.</td><td class="dark-red">66,6 mm</td><td>10 juli 1882</td>
+					</tr>
+				</table>
+			</div>
+			<div class="flex-item-2">
+				<span class="dark-red">Bl&ouml;tast &aring;r: 1960</span><br>
+				<span class="size0-9">&Aring;r 1960 uppm&auml;ttes totalt 801,3 mm nederb&ouml;rd.</span>
+			</div>
+			<div class="flex-item-2">
+				<span class="dark-blue">Torrast &aring;r: 1901</span>*<br>
+				<span class="size0-9">&Aring;r 1901 uppm&auml;ttes endast 356,3 mm nederb&ouml;rd.</span><br>
+				<span class="size0-8">*1875 uppm&auml;ttes endast 300 mm, men nederb&ouml;rdsm&auml;tningarna f&ouml;re 1894 anses f&ouml;r l&aring;ga f&ouml;r att vara trov&auml;rdiga. <span class="dark-blue"><a href="https://www.smhi.se/polopoly_fs/1.2854!/faktablad_stockholm%5B1%5D.pdf" target="blank"><i class="fa-solid fa-link"></i></a></span>
+			</div>
+		</div>
+		<div class="flex-item">
+			<div class="flex-item-2 align-center">
+				<h2 class="dark-blue">Sn&ouml;djup</h2>
+				(1893-2018)
+				<table class="maxmin_table">
+					<tr>
+						<td>1.</td><td class="dark-blue">76 cm</td><td>18 mars 1909</td>
+					</tr>
+					<tr>
+						<td>2.</td><td class="dark-blue">75 cm</td><td>17 mars 1909</td>
+					</tr>
+					<tr>
+						<td>3.</td><td class="dark-blue">73 cm</td><td>19 januari 1918</td>
+					</tr>
+					<tr>
+						<td>4.</td><td class="dark-blue">72 cm</td><td>20 januari 1918</td>
+					</tr>
+					<tr>
+						<td>5.</td><td class="dark-blue">71 cm</td><td>29 december 1915</td>
+					</tr>
+				</table>
+			</div>
+			<div class="flex-item-2">
+				<span class="dark-blue">St&ouml;rsta sn&ouml;djups&ouml;kning: 29 cm</span><br>
+				<span class="size0-9">Mellan kl 07:00 20 januari 1948 och kl 07:00 21 januari 1948 &ouml;kade sn&ouml;djupet fr&aring;n 21 cm till 50 cm.</span>
+			</div>
+			<div class="flex-item-2">
+				<span class="dark-blue">L&auml;ngsta period med m&auml;tbart sn&ouml;djup: 149 dagar</span><br>
+				<span class="size0-9">Mellan 23 november 1969 och 20 april 1970 var marken sn&ouml;t&auml;ckt p&aring; Observatoriekullen.</span>
+			</div>
 		</div>
 	</div>
 
-	<div id="climate">
-	</div>
-
-	<div class="attachment_container" id="attachment1">
-		<div class="type" onclick="showAttachment(this)"><i class="fas fa-info-circle"></i></i></div>
-		<div class="text_container">
-			<div class="text">
-				<p style="text-align:left;">Throughout the years <span class="red">cloudiness</span> have been described using many different scales, e. g. clear/scattered/overcast 1756-1784, tenths 1873-1960 and in hundreds by the current automatic station. In this visualization cloudiness have been approximated to eights as seen below.</p>
-				<table class="legend">
-					<tr>
-						<td>
-							0/8
-						</td>
-						<td>
-							1-2/8
-						</td>
-						<td>
-							3-4/8
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<div class="cloudiness"><span class="sun" style="font-size:1em;top:-0.5em;"><i class="fas fa-sun"></i></span></div>
-						</td>
-						<td>
-							<div class="cloudiness"><span class="sun" style="font-size:1em;top:-0.5em;"><i class="fas fa-sun"></i></span><span class="cloud" style="font-size:0.4em;left:1em;top:-0.65em;"><i class="fas fa-cloud"></i></span></div>
-						</td>
-						<td>
-							<div class="cloudiness"><span class="sun" style="font-size:1em;top:-0.5em;"><i class="fas fa-sun"></i></span><span class="cloud" style="font-size:0.6em;left:0.6em;top:-0.6em;"><i class="fas fa-cloud"></i></span></div>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							5-7/8
-						</td>
-						<td>
-							8/8
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<div class="cloudiness"><span class="sun" style="font-size:1em;top:-0.5em;"><i class="fas fa-sun"></i></span><span class="cloud" style="font-size:0.8em;left:0.2em;top:-0.6em;"><i class="fas fa-cloud"></i></span></div>
-						</td>
-						<td>
-							<div class="cloudiness"><span class="cloud" style="font-size:1em;top:-0.5em;"><i class="fas fa-cloud"></i></span></div>
-						</td>
-					</tr>
-				</table>
-				<p><span class="red">Note:</span> Precipitation is not included.</p>
-				<hr>
-				<p style="text-align:left;">
-					1756-01-01 <i class="fas fa-arrow-right red"></i> 1760-12-31 <span class="red">|</span> Two observations per day (morning &amp; noon).<br>
-					1761-01-01 <i class="fas fa-arrow-right red"></i> 2017-12-31 <span class="red">|</span> Three observations per day (morning, noon &amp; evening).<br>
-					1763-02-25 <i class="fas fa-arrow-right red"></i> 1763-02-28 <span class="red">|</span> No observations were made.<br>
-					1859-01-01 <i class="fas fa-arrow-right red"></i> 2017-12-31 <span class="red">|</span> Max and min temperature.<br>
-					1756-01-01 <i class="fas fa-arrow-right red"></i> 2012-12-31 <span class="red">|</span> Manual.<br>
-					2013-01-01 <i class="fas fa-arrow-right red"></i> 2017-12-31 <span class="red">|</span> Automatic.<br>
+	<div class="extra" id="data">
+		<div class="close" onclick="closeExtra();">
+			<i class="fas fa-times"></i> STÄNG
+		</div>
+		<div class="flex-item">
+			<div class="flex-item-2">
+				<span class="size2 dark-blue">DATA</span><br>
+				<span class="size1-5 dark-red">Temperatur &amp; Molnighet</span>
+				<p>
+					Anders Moberg (2021). Stockholm Historical Weather Observations. Dataset version 4. Bolin Centre Database. <br>
+					<i class="fas fa-link"></i> <a href="https://doi.org/10.17043/stockholm-4" target="blank">https://doi.org/10.17043/stockholm-4</a>
+				</p>
+				<p>
+					<table class="data-info">
+						<tbody>
+							<tr><td>1756-01-01</td><td>&#10143;</td><td>1760-12-31</td><td>Tv&aring; observationer per dag (morgon &amp; middag)</td></tr>
+							<tr><td>1761-01-01</td><td>&#10143;</td><td>2018-12-31</td><td>Tre observationer per dag (morgon, middag &amp; kv&auml;ll)</td></tr>
+							<tr><td>1763-02-25</td><td>&#10143;</td><td>1763-02-28</td><td>Inga observationer</td></tr>
+							<tr><td>1859-01-01</td><td>&#10143;</td><td>2018-12-31</td><td>Max/min-temperatur</td></tr>
+							<tr><td>1756-01-01</td><td>&#10143;</td><td>2012-12-31</td><td>Manuella observationer</td></tr>
+							<tr><td>2013-01-01</td><td>&#10143;</td><td>2018-12-31</td><td>Automatiska observationer</td></tr>
+						</tbody>
+					</table>
 				</p>
 			</div>
-			<div class="hide" onclick="hideAttachment(this)"><i class="far fa-times-circle"></i></div>
+		</div>
+		<div class="flex-item">
+			<div class="flex-item-2">
+				<span class="size2 dark-blue">DATA</span><br>
+				<span class="size1-5 dark-red">Dygnsnederb&ouml;rd &amp; Sn&ouml;djup</span>
+				<p> 
+					SMHI - &Ouml;ppna Data<br>
+					<i class="fas fa-link"></i> <a href="https://www.smhi.se/data/meteorologi/ladda-ner-meteorologiska-observationer#param=airtemperatureInstant,stations=all" target="blank">https://www.smhi.se/data/meteorologi/ladda-ner-meteorologiska-observationer</a>
+				</p>
+				<p>
+					<table class="data-info">
+						<thead>
+							<tr><th colspan=4>Dyngsnederb&ouml;rd</th></tr>
+						</thead>
+						<tbody>
+							<tr><td>1859-01-01</td><td>&#10143;</td><td>2018-12-31</td><td>Dygnet r&auml;knas fr&aring;n 06Z till 06Z (kl 07 svensk normaltid)</td></tr>
+						</tbody>
+					</table>
+				</p>
+				<p>
+					<table class="data-info">
+						<thead>
+							<tr><th colspan=4>Sn&ouml;djup</th></tr>
+						</thead>
+						<tbody>
+							<tr><td>1893/94</td><td>&#10143;</td><td>1903/04</td><td>Oregelbundna observationer</td></tr>
+							<tr><td>1904/05</td><td>&#10143;</td><td>2018</td><td>Regelbundna observationer</td></tr>
+						</tbody>
+					</table>
+				</p>
+			</div>
+		</div>
+		<div class="flex-item">
+			<div class="flex-item-2">
+				<span class="size2 dark-blue">LEGEND</span><br>
+				<span class="size1-5 dark-red">Molnighet</span>
+				<table class="legend">
+					<thead>
+						<tr><th>&aring;ttondelar</th><th>symbol</th></tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>
+								0
+							</td>
+							<td>
+								<div class="cloudiness"><span class="sun" style="font-size:1em;top:-0.5em;"><i class="fas fa-sun"></i></span></div>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								1-2
+							</td>
+							<td>
+								<div class="cloudiness"><span class="sun" style="font-size:1em;top:-0.5em;"><i class="fas fa-sun"></i></span><span class="cloud" style="font-size:0.4em;left:1em;top:-0.65em;"><i class="fas fa-cloud"></i></span></div>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								3-4
+							</td>
+							<td>
+								<div class="cloudiness"><span class="sun" style="font-size:1em;top:-0.5em;"><i class="fas fa-sun"></i></span><span class="cloud" style="font-size:0.6em;left:0.6em;top:-0.6em;"><i class="fas fa-cloud"></i></span></div>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								5-7
+							</td>
+							<td>
+								<div class="cloudiness"><span class="sun" style="font-size:1em;top:-0.5em;"><i class="fas fa-sun"></i></span><span class="cloud" style="font-size:0.8em;left:0.2em;top:-0.6em;"><i class="fas fa-cloud"></i></span></div>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								8
+							</td>
+							<td>
+								<div class="cloudiness"><span class="cloud" style="font-size:1em;top:-0.5em;"><i class="fas fa-cloud"></i></span></div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 		</div>
 	</div>
 	
 	<footer>
 		<span class="text">
-			<span class="blue">data: <a href="https://bolin.su.se/data/stockholm/" target="blank">Bolin Centre for Climate Research</a> | contact: <span class="red">mattias.burtu[at]gmail.com</span> | background: <a href="https://sv.wikipedia.org/wiki/Fil:Stockholm_panorama_1868_Stadsmuseum.jpg" target="blank">Stockholm panorama. Lithography by Carl Johan Billmark 1868.</a> <i class="fab fa-creative-commons-pd"></i></span>
+			<span class="blue">kontakt: <span class="red">mattias.burtu[at]gmail.com</span> | bakgrund: <a href="https://sv.wikipedia.org/wiki/Fil:Stockholm_panorama_1868_Stadsmuseum.jpg" target="blank">Stockholm panorama. Litografi av Carl Johan Billmark 1868.</a> <i class="fab fa-creative-commons-pd"></i></span>
 		</span>
 	</footer>
+	
 </div>
 
 <script src="js/stockholm.js"></script>
