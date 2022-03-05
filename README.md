@@ -5,7 +5,7 @@ Visualizes weather observations made at the old observatory in Stockholm.
 Json and csv, see /data.
 
 - #### Source
-Bolin Centre for Climate Research - https://bolin.su.se/data/stockholm-thematic/
+Bolin Centre for Climate Research - https://bolin.su.se/data/stockholm-thematic/,
 SMHI - Öppna data - https://www.smhi.se/data/meteorologi/ladda-ner-meteorologiska-observationer
 
 ### Dependencies
