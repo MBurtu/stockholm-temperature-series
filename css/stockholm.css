@@ -12,9 +12,9 @@
 //          3.1 Sliders
 //          3.2 Containers
 //          3.3 Sun & Clouds
-//          3.4 Snow depth
+//          3.4 Precipitation
 //      4. Bar chart
-//      5. Attachments
+//      5. Records & Data
 //          5.1 Containers
 //          5.2 Table
 //      6. Typography
@@ -30,16 +30,19 @@
 *
 ***********************************/
 
-@import url(http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,300italic,700);
-@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,400italic,700);
-@import url(http://fonts.googleapis.com/css?family=Sorts+Mill+Goudy:400,400italic,700);
+@import url(https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,300italic,700);
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,700);
+@import url(https://fonts.googleapis.com/css?family=Sorts+Mill+Goudy:400,400italic,700);
+
+html {	
+	font-size: 1.2vw;
+	line-height: 1.8vw;
+}
 
 body {
 	width: 100%;
 	padding: 0; 
 	margin: 0;
-	font-size: 17px;
-	line-height: 28px;
 	font-family: 'Open Sans Condensed', sans-serif, Georgia;
 	font-weight: bold;
 	text-align: center;
@@ -47,54 +50,7 @@ body {
 	background-size: cover;
 	background-attachment: fixed;
 }
-@media screen and (max-width: 450px) {
-	body {
-		font-size: 9px;
-		line-height: 15px;
-	}
-}
-@media screen and (min-width: 960px) and (max-width: 1200px) {
-	body {
-		font-size: 18px;
-		line-height: 29px;
-	}
-}
-@media screen and (min-width: 1200px) and (max-width: 1450px) {
-	body {
-		font-size: 19px;
-		line-height: 30px;
-	}
-}
-@media screen and (min-width: 1450px) and (max-width: 1550px) {
-	body {
-		font-size: 20px;
-		line-height: 32px;
-	}
-}
-@media screen and (min-width: 1550px) and (max-width: 1750px) {
-	body {
-		font-size: 22px;
-		line-height: 34px;
-	}
-}
-@media screen and (min-width: 1750px) and (max-width: 2000px) {
-	body {
-		font-size: 25px;
-		line-height: 37px;
-	}
-}
-@media screen and (min-width: 2000px) and (max-width: 2500px) {
-	body {
-		font-size: 28px;
-		line-height: 38px;
-	}
-}
-@media screen and (min-width: 2500px) {
-	body {
-		font-size: 32px;
-		line-height: 41px;
-	}
-}
+
 *, *:after, *:before { 
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -194,15 +150,10 @@ body {
 
 footer {
 	float: left;
-	display: flex;
-	justify-content: flex-end;
 	width: 100%;
 	height: 5vh;
-	font-size: 0.8em;
+	font-size: 1rem;
 	background: rgba(215, 202, 170, 0.7);
-}
-footer .text {
-	align-self: flex-end;
 	text-align: center;
 }
 
@@ -212,6 +163,7 @@ footer .text {
 	height: 5vh;
 	border-top: 3px dashed rgba(0,0,0,0.6);
 	background: rgba(255,255,255,0.5);
+	text-align: center;
 }
 
 #start_bg {
@@ -286,28 +238,18 @@ footer .text {
 	line-height: 100%;
 	text-align: left;
 }
-/*.cld_tmp {
-	
-}*/
-.snow {
-	display: none;
-	height: 100%;
-	flex-direction: column;
-	justify-content: flex-end;
-	gap: 0.5rem;
-}
 
 #input_year {
-	font-size: 15em;
+	font-size: 16rem;
 	line-height: 100%;
 }
 #input_month {
-	font-size: 4em;
+	font-size: 4rem;
 	line-height: 100%;
 	padding-left: 10px;
 }
 #input_day {
-	font-size: 4em;
+	font-size: 4rem;
 	line-height: 100%;
 }
 
@@ -350,62 +292,14 @@ footer .text {
 }
 
 /**********************************
-*     3.4 Snow depth */
+*     3.4 Precipitation */
 
-.snow-header {
-	font-size: 1.2em;
-	color: rgba(51, 73, 95, 0.8);
+.depth_cm, .precip24 {
+	font-size: 4rem;
+	color:rgba(153, 51, 51, 0.8);
 }
-
-.measurement {
-	height: 50%;
-	display: flex;
-	align-items: flex-end;
-	gap: 0.5rem;
-	padding: 0 0 5vh 1vw;
-}
-
-.ruler {
-	float: left;
-	height: 100%;
-	width: 2rem;
-}
-.ten_cm {
-	float: left;
-	width: 100%;
-	height: 10%;
-}
-.block {
-	float: left;
-	width: 50%;
-	height: 100%;
-}
-.black-block {
-	background-color: rgba(51,73,95,0.8);
-}
-.beige-block {
-	background-color: rgba(215, 202, 170, 0.7);
-}
-
-.snow_depth {
-	display: flex;
-	flex-direction: column;
-}
-.depth_block {
-	display: flex;
-	flex-direction: column;
-	height: 0;
-	width: 3rem;
-	font-size: 1.5rem;
-	line-height: 0;
-	overflow: hidden;
-}
-.snow_flake {
-	padding: 0;
-	text-shadow: 3px 3px 0px rgba(51,51,51,0.5);
-}
-.depth_cm {
-	color:rgba(153, 51, 51, 1.0);
+.unit {
+	font-size: 2rem;
 }
 
 /**********************************
@@ -440,7 +334,7 @@ footer .text {
 }
 .running_mean {
 	stroke: rgba(215, 202, 170, 1);
-	stroke-width: 0.1em;
+	stroke-width: 0.15rem;
 	fill: none;
 	-webkit-filter: drop-shadow( 0px 0px 2px rgba(0, 0, 0, .8));
 	filter: drop-shadow( 0px 0px 2px rgba(0, 0, 0, .8));
@@ -450,25 +344,25 @@ footer .text {
 .axis line {
 	fill: none;
 	stroke: #333;
-	stroke-width: 0.03em;
+	stroke-width: 0.03rem;
 	shape-rendering: crispEdges;
 }
 .y-label {
-	font-size: 0.7em;
+	font-size: 0.7rem;
 }
 .ticks {
-	font-size: 0.6em;
+	font-size: 0.7rem;
 	color: rgb(0,0,0);
 	fill-opacity: 0.7;
 }
 .title {
-	font-size: 0.7em;
+	font-size: 0.8rem;
 	color: rgb(0,0,0);
 	fill-opacity: 0.7;
 }
 .gridline {
 	stroke: rgb(194, 182, 152);
-	stroke-width: 0.03em;
+	stroke-width: 0.04rem;
 	fill: none;
 	shape-rendering: crispEdges;
 }
@@ -479,67 +373,80 @@ path.domain {
 
 /**********************************
 *
-*     5. Attachments
+*     5. Records & Data
 *
 ***********************************/
 
 /**********************************
 *     5.1 Containers */
 
-.attachment_container {
-	width: 50%;
-	position: fixed;
-	right: -45%;
-	z-index: 2;
+.extra {
+	display: none;
+	width: 100%;
+	height: 95vh;
+	padding: 3rem 2rem 2rem 2rem;
+	gap: 2rem;
+	align-items: flex-start;
 }
-.attachment_container:after {
-	content: "";
-	display: table;
-	clear: both;
+
+.flex-item {
+	display: flex;
+	flex-direction: column;
+	flex-grow: 1;
+	flex-basis: 0;
+	gap: 2rem;
+	text-align: left;
 }
-.type {
-	float: left;
-	width: 10%;
+
+.flex-item-2 {
+	background-color: rgba(215, 202, 170, 0.7);
+	padding: 0.5rem 1rem;
+	border-radius: 5px;
+	line-height: 120%;
+}
+
+.maxmin_table {
+	margin: 0 auto;
+	text-align: center;
+	font-size: 1.3rem;
+}
+.maxmin_table td {
+	padding: 0.5rem 0.5rem;
+}
+.maxmin_table td:nth-of-type(3) {
+	font-size: 1rem;
+	text-align: left;
+}
+
+.maxmin_header {
+	position: absolute;
+	font-size: 3rem;
+	left: 45%;
+	top: 1rem;
+}
+.close {
+	position: absolute;
+	color: rgba(153, 51, 51, 1.0);
+	font-size: 1.5rem;
+	left: 0.5rem;
+	top: 0.5rem;
+	cursor: pointer;
+}
+.extra_btn {
+	position: absolute;
+	left: 0;
 	font-size: 120%;
 	padding: 10px 10px 10px 20px;
-	background-color: rgba(153,51,51,0.8);
-	color: white;
-	-webkit-border-radius: 5px 0px 0px 5px;
-	-moz-border-radius: 5px 0px 0px 5px;
-	border-radius: 5px 0px 0px 5px;
+	background-color: rgba(215, 202, 170, 0.5);
+	color: rgba(153, 51, 51, 0.8);
+	border-radius: 0 5px 5px 0;
 	-webkit-box-shadow: 0px 0px 7px rgba(50, 50, 50, 0.3);
 	-moz-box-shadow:    0px 0px 7px rgba(50, 50, 50, 0.3);
 	box-shadow:         0px 0px 7px rgba(50, 50, 50, 0.3);
 	cursor: pointer;
 }
-.text_container {
-	float: left;
-	width: 90%;
-	height: auto;
-	padding: 10px 10px 10px 20px;
-	background: rgb(231, 229, 198, 0.8);
-	-webkit-border-radius: 0px 0px 0px 5px;
-	-moz-border-radius: 0px 0px 0px 5px;
-	border-radius: 0px 0px 0px 5px;
-	overflow-y: scroll;
-	max-height: 60vh;
-	border-top: 4px solid rgba(153,51,51,0.8);
-	border-bottom: 4px solid rgba(153,51,51,0.8);
-	border-left: 4px solid rgba(153,51,51,0.8);
-}
-.text {
-	float: left;
-	width: 93%;
-	color: rgba(51,73,95,0.8);
-}
-.hide {
-	float: right;
-	font-size: 120%;
-	color: #993333;
-	cursor: pointer;
-}
-#attachment1 { top: 20%; }
-#attachment2 { top: 30%; }
+#attachment1 { top: 15%; }
+#attachment2 { top: 25%; }
 
 /**********************************
 *     5.2 Table */
@@ -548,55 +455,96 @@ table.output {
 	text-align: left;
 }
 table.output thead {
-	font-size: 1.5em;
+	font-size: 1.8rem;
 	line-height: 100%;
+	text-align: center;
 }
 table.output tbody {
-	font-size: 4em;
+	font-size: 4rem;
 	line-height: 100%;
 }
 table.output td {
-	padding: 10px;
+	padding: 0.5rem;
+	margin: 0.5rem;
 }
 table.output tbody td:nth-of-type(2) {
-	width: 3.5em;
+	width: 15vw;
 }
 table.output tbody td:nth-of-type(3) {
-	width: 1.6em;
 	padding-left: 20px;
+}
+table.output tbody tr:nth-of-type(4) {
+	text-align: center;
+	font-size: 3rem;
+}
+table.output .border-top {
+	border-top: 5px solid rgba(51,73,95,0.8);
+}
+table.output .precip {
+	font-size: 1.8rem;
+	line-height: 1.5rem;
+	color: rgba(51,73,95,0.8);
+	border-left: 5px solid rgba(51,73,95,0.8);
+	vertical-align: top;
+}
+table.output .time_stamp {
+	font-size: 1.3rem;
+	color: rgba(0,0,0,0.6);
 }
 
 table.legend {
 	margin: 0 auto;
-	text-align: left;
+}
+table.legend thead {
+	font-size: 1.2rem;
+	text-align: center;
 }
 table.legend tbody {
 	line-height: 100%;
 }
 table.legend td {
+	padding: 1.5rem;
+}
+table.legend td:first-of-type {
+	color: rgba(153,51,51,1.0);
+	text-align: right;
+	font-size: 2rem;
+}
+table.legend td:nth-of-type(2) {
 	width: 10vw;
-	padding: 10px;
-}
-table.legend tr:nth-child(even) {
-	height: 1em;
-	font-size: 4em;
-}
-table.legend tr:nth-child(odd) td {
-	padding-left: 2em;
-	color: rgba(153,51,51,0.8);
+	font-size: 3rem;
 }
 
+table.data-info thead {
+	color: rgba(153,51,51,1.0);
+}
+table.data-info td:first-of-type, table.data-info td:nth-of-type(3) {
+	width: 20%;
+	color: rgba(51,73,95,1.0);
+}
+table.data-info td:nth-of-type(2) {
+	color: rgba(153,51,51,1.0);
+}
 /**********************************
 *
 *     6. Typography
 *
 ***********************************/
 
-.size1-5 { font-size: 1.5em; line-height: 100%; }
-.size3 { font-size: 3em; line-height: 100%; }
-.size4 { font-size: 4em; line-height: 100%; }
-.size6 { font-size: 6em; line-height: 100%; }
-.size8 { font-size: 8em; line-height: 100%; }
+h1 { font-size: 2rem;}
+h2 { font-size: 1.5rem; line-height: 100%; margin: 0; padding: 0; text-align: center;}
+
+.size0-5 { font-size: 0.5rem; line-height: 100%; }
+.size0-8 { font-size: 0.8rem; line-height: 100%; }
+.size0-9 { font-size: 0.9rem; line-height: 100%; }
+.size1 { font-size: 1rem; line-height: 100%; }
+.size1-3 { font-size: 1.3rem; line-height: 100%; }
+.size1-5 { font-size: 1.5rem; line-height: 100%; }
+.size2 { font-size: 2rem; line-height: 100%; }
+.size3 { font-size: 3rem; line-height: 100%; }
+.size4 { font-size: 4rem; line-height: 100%; }
+.size6 { font-size: 6rem; line-height: 100%; }
+.size8 { font-size: 8rem; line-height: 100%; }
 
 .align-left { text-align: left; }
 .align-right { text-align: right; }
